@@ -1,0 +1,29 @@
+This is a project used only for update master-thesis! 
+Topic is about the optimization of Tracking Area List design in LTE networks,
+so that to reduce the overall signaling 
+
+In order to introduce Idle/Acrtive ratio into all these UEs, we classify a part of all UEs into active/idle in advance
+which means, these selected Users would keep in the same state all the time. For paging possiblity, a paging ratio is 
+also introduced in a way that the UE would be paged randomly in each time interval. 
+
+After all the preparation, then comes the implementation in several steps:
+1, UE appears firstly in the city, then Procedure "Initial Attachment" would be conducted
+2, For each time stemp, judge each existent UE, if each of them is in idle state or active state, then different 
+further steps will be made as below.
+3.1 If UE is in active state, then no periodic paging, only Handover with TAU exists when UE enters into a new TA 
+which not belongs to original TAL.
+3.2 If UE is in idle state, then periodic paging is considered in each time interval. Other than that, normal cell
+reselection with TAU procedureand TAL reselection is conducted also. 
+
+In each time stemp, total cost(not just separate cost for S-GW/P-GW/MME) including TAU & Paging is calculated 
+dependent of its TAL allocation scheme. This mechanism is used several times in order to get an optimized TAL
+scheme. 
+How to calculate "total cost"?
+1, we use a struct: cost.time_n.* (* represents a set of parameters like: total_cost, eNB_cost, MME_cost, SGW_cost
+PGW_cost, PCFR_cost).**(** represents either messages per second or bytes per second)
+2, For each 'handover with TAU'/Paging/periodic TAU/'cell reselection with TAU', we calculate the overall cost for both different 
+network entities and sum of them in each time interval
+
+
+
+
